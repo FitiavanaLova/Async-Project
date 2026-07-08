@@ -21,35 +21,35 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class CourseSubscriptionController {
 
-    private final CourseSubscriptionService courseSubscriptionService;
-    private final Mailer mailer;
+  private final CourseSubscriptionService courseSubscriptionService;
+  private final Mailer mailer;
 
-    @PostMapping("/courses/{courseId}/subscribe")
-    @ResponseStatus(HttpStatus.CREATED)
-    @SneakyThrows
-    public SubscriptionResponse subscribe(
-            @PathVariable UUID courseId, @RequestBody SubscribeUserRequest request) {
+  @PostMapping("/courses/{courseId}/subscribe")
+  @ResponseStatus(HttpStatus.CREATED)
+  @SneakyThrows
+  public SubscriptionResponse subscribe(
+      @PathVariable UUID courseId, @RequestBody SubscribeUserRequest request) {
 
-        var subscription = courseSubscriptionService.subscribe(courseId, request);
+    var subscription = courseSubscriptionService.subscribe(courseId, request);
 
-        var recipientAddress = new InternetAddress(request.email());
+    var recipientAddress = new InternetAddress(request.email());
 
-        var email =
-                new Email(
-                        recipientAddress,
-                        List.of(),
-                        List.of(),
-                        "Confirmation d'inscription",
-                        "<p>Bonjour "
-                                + request.firstName()
-                                + ",</p>"
-                                + "<p>Votre inscription au cours <strong>"
-                                + subscription.courseTitle()
-                                + "</strong> a été confirmée.</p>",
-                        List.of());
+    var email =
+        new Email(
+            recipientAddress,
+            List.of(),
+            List.of(),
+            "Confirmation d'inscription",
+            "<p>Bonjour "
+                + request.firstName()
+                + ",</p>"
+                + "<p>Votre inscription au cours <strong>"
+                + subscription.courseTitle()
+                + "</strong> a été confirmée.</p>",
+            List.of());
 
-        mailer.accept(email);
+    mailer.accept(email);
 
-        return subscription;
-    }
+    return subscription;
+  }
 }

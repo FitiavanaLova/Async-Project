@@ -20,20 +20,20 @@ import lombok.Setter;
 @NoArgsConstructor
 public class User {
 
-    @Id private UUID id;
+  @Id private UUID id;
 
-    private String firstName;
+  private String firstName;
 
-    private String lastName;
+  private String lastName;
 
-    private String userName;
+  private String userName;
 
-    private String email;
+  private String email;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_course_subscription",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private Set<Course> courses = new HashSet<>();
+  @ManyToMany
+  @JoinTable(
+      name = "user_course_subscription",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "course_id"))
+  private Set<Course> courses = new HashSet<>();
 }

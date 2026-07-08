@@ -16,37 +16,37 @@ import org.springframework.web.server.ResponseStatusException;
 @AllArgsConstructor
 public class CourseSubscriptionService {
 
-    private final CourseRepository courseRepository;
-    private final UserRepository userRepository;
+  private final CourseRepository courseRepository;
+  private final UserRepository userRepository;
 
-    @Transactional
-    public SubscriptionResponse subscribe(UUID courseId, SubscribeUserRequest request) {
-        var course =
-                courseRepository
-                        .findById(courseId)
-                        .orElseThrow(
-                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found"));
+  @Transactional
+  public SubscriptionResponse subscribe(UUID courseId, SubscribeUserRequest request) {
+    var course =
+        courseRepository
+            .findById(courseId)
+            .orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found"));
 
-        var user =
-                userRepository
-                        .findById(request.id())
-                        .orElseGet(
-                                () -> {
-                                    var newUser = new User();
+    var user =
+        userRepository
+            .findById(request.id())
+            .orElseGet(
+                () -> {
+                  var newUser = new User();
 
-                                    newUser.setId(request.id());
-                                    newUser.setFirstName(request.firstName());
-                                    newUser.setLastName(request.lastName());
-                                    newUser.setUserName(request.userName());
-                                    newUser.setEmail(request.email());
+                  newUser.setId(request.id());
+                  newUser.setFirstName(request.firstName());
+                  newUser.setLastName(request.lastName());
+                  newUser.setUserName(request.userName());
+                  newUser.setEmail(request.email());
 
-                                    return newUser;
-                                });
+                  return newUser;
+                });
 
-        user.getCourses().add(course);
+    user.getCourses().add(course);
 
-        userRepository.save(user);
+    userRepository.save(user);
 
-        return new SubscriptionResponse(user.getId(), course.getId(), course.getTitle());
-    }
+    return new SubscriptionResponse(user.getId(), course.getId(), course.getTitle());
+  }
 }

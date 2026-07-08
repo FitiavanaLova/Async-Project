@@ -20,16 +20,16 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Course {
 
-    @Id private UUID id;
+  @Id private UUID id;
 
-    private String title;
+  private String title;
 
-    @Column(name = "start_date")
-    private Instant start;
+  @Column(name = "start_date")
+  private Instant start;
 
-    @Column(name = "end_date")
-    private Instant end;
+  @Column(name = "end_date")
+  private Instant end;
 
-    @ManyToMany(mappedBy = "courses")
-    private Set<User> subscribers = new HashSet<>();
+  @ManyToMany(mappedBy = "courses")
+  private Set<User> subscribers = new HashSet<>();
 }
