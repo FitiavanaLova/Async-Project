@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 public class CourseSubscriptionController {
-
+//Subscription
   private final CourseSubscriptionService courseSubscriptionService;
   private final Mailer mailer;
 
