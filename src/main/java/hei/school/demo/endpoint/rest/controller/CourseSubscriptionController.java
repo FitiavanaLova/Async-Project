@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 public class CourseSubscriptionController {
-//Subscription
   private final CourseSubscriptionService courseSubscriptionService;
   private final Mailer mailer;
 
@@ -33,7 +32,7 @@ public class CourseSubscriptionController {
     var subscription = courseSubscriptionService.subscribe(courseId, request);
 
     var recipientAddress = new InternetAddress(request.email());
-
+    // email
     var email =
         new Email(
             recipientAddress,
